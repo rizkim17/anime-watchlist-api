@@ -165,10 +165,26 @@ The following is a list of tools and dependencies used in this project along wit
 | ![jsonwebtoken](https://img.shields.io/npm/v/jsonwebtoken.svg) | `^9.0.2` | [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) |
 | ![mysql2](https://img.shields.io/npm/v/mysql2.svg) | `^3.12.0` | [mysql2](https://www.npmjs.com/package/mysql2) |
 
----
-**ℹ️ Note:** The version displayed on the badge may change according to the latest version released on npm.
 
-Atau kamu juga bisa langsung menginstalnya sekaliugus di terminal atau  bash.
+## Function
+1. **axios** → Library buat ngambil data dari API dengan lebih gampang, bisa dipakai buat GET, POST, atau request lain ke server. Dibanding `fetch`, axios punya fitur tambahan kayak timeout, otomatis ubah data ke JSON, dan bisa pakai interceptor buat handle error atau token.  
+
+2. **bcryptjs** → Digunakan buat nge-hash (enkripsi) password sebelum disimpan ke database, biar lebih aman dan nggak bisa dibaca langsung. Selain itu, bcrypt juga bisa ngecek apakah password yang dimasukkan user cocok dengan yang udah di-hash sebelumnya.  
+
+3. **cors** → Middleware buat mengizinkan request dari domain yang berbeda ke backend. Tanpa CORS, browser bakal blokir request kalau frontend dan backend beda origin (misal frontend di `localhost:3000` dan backend di `localhost:5000`).  
+
+4. **dotenv** → Dipakai buat menyimpan variabel lingkungan (environment variables) dalam file `.env`, misalnya API key, URL database, atau konfigurasi lain. Ini bikin kode lebih rapi dan aman karena data sensitif nggak langsung ditulis di script utama.  
+
+5. **express** → Framework untuk Node.js yang bikin pembuatan backend jadi lebih cepat dan mudah. Express menyediakan fitur seperti routing, middleware, dan handler request, jadi nggak perlu bikin semuanya dari nol.  
+
+6. **express-validator** → Digunakan buat validasi input dari user sebelum diproses atau masuk ke database. Misalnya buat ngecek apakah email valid, password cukup panjang, atau field tertentu nggak boleh kosong, biar aplikasi lebih aman dan terhindar dari error.  
+
+7. **jsonwebtoken** → Library buat bikin dan memverifikasi token JWT, yang biasa dipakai buat sistem autentikasi tanpa perlu nyimpen session di server. JWT ini sering digunakan buat login, jadi setiap user yang login dapat token yang bisa dipakai buat akses data tanpa perlu login ulang.  
+
+8. **mysql2** → Library buat koneksi ke database MySQL dari aplikasi Node.js. Dibandingkan `mysql`, versi `mysql2` lebih cepat, lebih ringan, dan mendukung fitur modern MySQL seperti prepared statements, promise API, dan streaming data.
+---
+**ℹ️ Note:** The version displayed on the badge may change according to the latest version released on npm. Or you can simply install it once in terminal or bash.
+
 ```bash
 npm install axios bcryptjs cors dotenv express express-validator jsonwebtoken mysql2
 ```
@@ -306,6 +322,124 @@ Although the configuration is simple, it is a good practice in application devel
 These two configurations work together to make our application run well. The MySQL database stores user data and their preferences, while the Jikan API provides up-to-date anime data. The combination of the two allows us to create a complete and dynamic anime watchlist application.
 
 ## 6. Testing Postman
+## Auth
+### Register
+**Endpoint:**
+```
+POST /api/auth/register
+```
+**Example cURL Request:**
+```sh
+--location 'http://localhost:5000/api/auth/register'
+
+
+--data-raw 
+{
+    "username": "rizkimaulana",
+    "email": "iq@example.com",
+    "password": "password123"
+}
+```
+
+**Response:**
+```json
+{
+    "status": "success",
+    "message": "Registration successful",
+    "data": {
+        "token": "<JWT_TOKEN>"
+    }
+}
+```
+
+---
+
+### Login
+**Endpoint:**
+```
+POST /api/auth/login
+```
+**Example cURL Request:**
+```sh
+curl 
+--location 'http://localhost:5000/api/auth/login'
+
+--data-raw {
+    "email": "iq@example.com",
+    "password": "password123"
+}
+```
+
+**Response:**
+```json
+{
+    "status": "success",
+    "message": "Login successful",
+    "data": {
+        "token": "<JWT_TOKEN>"
+    }
+}
+```
+
+---
+
+### Get Profile
+**Endpoint:**
+```
+GET /api/auth/profile
+```
+
+**Authorization:**
+Bearer Token
+
+**Example cURL Request:**
+```sh
+curl 
+--location 'http://localhost:5000/api/auth/profile'
+--header 'Authorization: Bearer <JWT_TOKEN>'
+```
+
+**Response:**
+```json
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "id": 1,
+        "username": "rizkimaulana",
+        "email": "iq@example.com",
+        "profile_picture": null,
+        "created_at": "2025-02-01T16:46:00.000Z"
+    }
+}
+```
+
+---
+
+### Update Profile
+**Endpoint:**
+```
+PUT /api/auth/profile
+```
+**Authorization:**
+Bearer Token
+**Example cURL Request:**
+```sh
+curl --location --request PUT 'http://localhost:5000/api/auth/profile' \
+--header 'Authorization: Bearer <JWT_TOKEN>' \
+--data-raw '{
+    "username": "iqmaulana"
+}'
+```
+
+**Response:**
+```json
+{
+    "status": "success",
+    "message": "Profile updated successfully",
+    "data": null
+}
+```
 
 ## 7. API Documentation
 Anime Watchlist API Documentation use postman you can click 👉[**Link in here**](https://documenter.getpostman.com/view/40816838/2sAYX3qiX1)
