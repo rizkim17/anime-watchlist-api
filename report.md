@@ -15,3 +15,13 @@ Group Members
 2. MAMBUNA BOJANG
 3. DIKRI ALI
 4. MAHMOUD KHAIRALLA AMIN MORSI
+
+CREATE TABLE users (
+    id INT(11) PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100),
+    password VARCHAR(255),
+    profile_picture VARCHAR(255),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
