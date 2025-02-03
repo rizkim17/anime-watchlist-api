@@ -10,7 +10,7 @@
 ## 1. Introduction
 In this final project we create a REST API, namely Anime Watchlist. Anime Watchlist API is a REST API designed to help users manage and track the anime they want to watch. The project will allow users to search for anime, view detailed information about them, and create watchlists to keep track of the anime they want to watch. The service will fetch anime data from a third-party API (Jikan API) and provide a basic set of features to manage and browse anime.
 
-### Features Overview
+### Features Overview 📝
 - User management (register, login, profile update)
 - Watchlist management (add, update, delete anime from watchlist)
 - Review system
@@ -129,7 +129,7 @@ PUT /api/reviews/:id
 DELETE /api/reviews/:id 
 ```
 
-3.4 Search History Endpoints
+## 3.4 Search History Endpoints
 ### Get user's search history
 ``` 
 GET /api/search-history 
@@ -142,7 +142,23 @@ POST /api/search-history
 ``` 
 DELETE /api/search-history/:id 
 ```
-
+## 3.5 Anumes Enpoints
+### Search Anime
+```
+GET http://localhost:5000/api/animes?q=naruto
+```
+### Tending Anime
+```
+GET http://localhost:5000/api/animes/trending
+```
+### Seasonal Anime
+```
+GET http://localhost:5000/api/animes/seasonal
+```
+### Upcoming Anime
+```
+GET http://localhost:5000/api/animes/upcomin
+```
 ## 📦4. Project Tools
 The following is a list of tools and dependencies used in this project along with their versions and links to download and npm.
 
